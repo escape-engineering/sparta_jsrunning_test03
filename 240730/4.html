@@ -1,0 +1,46 @@
+<!-- // 4. DOM 제어와 함께 비동기 처리하기 // html 파일을 하나 만들고 openAPI 를 활용해 고양이 사진을 불러오는 api를 요청하려합니다. 
+// 받아온 고양이 사진 url을 img 태그를 생성하고, imageContainer 라는 이름의 div에 동적으로 생성해주세요. 
+// 3번문제는 03.js가 아닌, 아래 코드를 참고하여 03.html (혹은 index.html 등 이름은 자유) 로 진행해 주시기 바랍니다. -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>랜덤 고양이 사진</title>
+    </head>
+    <body>
+        <div id="imageContainer"></div>
+
+        <script>
+            let API_URL = `https://api.thecatapi.com/v1/images/search`;
+
+            let options = {
+                method: "GET",
+                headers: {
+                    accept: "application/json",
+                    "x-api-key": "live_8GfbTk0GMtgRdbxUB7XcuYzuMmfShEHGHNSnDo26DDgJDVUHDWqzJ25rJKpsSqud",
+                },
+            };
+
+            async function getCatImg() {
+                let res = await fetch(API_URL, options);
+                return res;
+            }
+            getCatImg()
+                .then((res) => res.json())
+                .then((res) => {
+                    const $imageContainer = document.querySelector("#imageContainer");
+                    const { height, id, url, width } = res[0];
+                    let catImg = document.createElement("img");
+                    catImg.id = `${id}`;
+                    catImg.src = `${url}`;
+                    catImg.setAttribute("style", `height:${height}px; width:${width}px`);
+
+                    $imageContainer.appendChild(catImg);
+                });
+
+            // API_URL 과 options를 사용해 fetch 로 API 요청을 한 후, 해당 데이터를 통해 img 태그를 생성하여 주세요.
+        </script>
+    </body>
+</html>
