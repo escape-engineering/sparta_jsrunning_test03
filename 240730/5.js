@@ -39,9 +39,18 @@ function findFirstCompletedTask() {
         let a = taskA();
         let b = taskB();
         let c = taskC();
-        if (a) resolve(a);
-        if (b) resolve(b);
-        if (c) resolve(c);
+        if (a) {
+            resolve(a);
+            return;
+        }
+        if (b) {
+            resolve(b);
+            return;
+        }
+        if (c) {
+            resolve(c);
+            return;
+        }
     });
 }
 findFirstCompletedTask().then((res) => console.log(res));
