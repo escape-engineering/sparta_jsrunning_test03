@@ -5,22 +5,22 @@
 const API_URL = "https://open.api.com/v1/data";
 const WRONG_URL = "https://open.api.com/v1/wrong";
 
-function timeout() {
-    return new Promise((resolve) => setTimeout(resolve, 3000));
+function timeout(url) {
+    return new Promise((resolve, reject) =>
+        setTimeout(function () {
+            if (url === API_URL) {
+                resolve("올바른 url입니다!");
+            } else {
+                reject("올바르지 않은 url입니다.");
+            }
+        }, 3000)
+    );
 }
 
 async function getData(url) {
     // 3초 뒤 url 이 API_URL과 같다면 성공으로 처리를, 아닐 경우 실패로 처리를 하게 해주세요
-    try {
-        await timeout();
-        if (url === API_URL) {
-            return "올바른 url입니다!";
-        } else {
-            throw new Error("올바르지 않은 url입니다.");
-        }
-    } catch (err) {
-        return err;
-    }
+    const result = await timeout(url);
+    return result;
 }
 
 // getData(API_URL), getData(WRONG_URL) 각각 성공과 실패에 대한 처리를 코드작성해주세요.

@@ -35,23 +35,7 @@ function taskC() {
 }
 
 function findFirstCompletedTask() {
-    return new Promise((resolve) => {
-        let a = taskA();
-        let b = taskB();
-        let c = taskC();
-        if (a) {
-            resolve(a);
-            return;
-        }
-        if (b) {
-            resolve(b);
-            return;
-        }
-        if (c) {
-            resolve(c);
-            return;
-        }
-    });
+    return Promise.race([taskA(), taskB(), taskC()]);
 }
 findFirstCompletedTask().then((res) => console.log(res));
 // 가장 먼저 완료된 작업을 찾아서 반환되는 값을 출력하세요.
